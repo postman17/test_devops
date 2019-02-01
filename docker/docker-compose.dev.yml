@@ -2,16 +2,6 @@ version: '3'
 
 services:
 
-  app:
-    build: {context: ../, dockerfile: docker/test/Dockerfile}
-    volumes:
-      - ../media:/media
-      - ../static:/static
-    env_file:
-      - ../.env
-    depends_on:
-      - postgresql
-
   nginx:
     build: {context: ../, dockerfile: docker/nginx/Dockerfile}
     volumes:
@@ -21,6 +11,16 @@ services:
       - app
     ports:
       - "8044:80"
+
+  app:
+    build: {context: ../, dockerfile: docker/test/Dockerfile}
+    volumes:
+      - ../media:/media
+      - ../static:/static
+    env_file:
+      - ../.env
+    depends_on:
+      - postgresql
 
   postgresql:
     image: postgres:11.1-alpine

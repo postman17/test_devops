@@ -10,12 +10,12 @@ server {
 
     # media
     location /media/ {
-        alias /media;
+        alias /media/;
     }
 
     #static
     location /static/ {
-        alias /static;
+        alias /static/;
     }
 
     location  / {
