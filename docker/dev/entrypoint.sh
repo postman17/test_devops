@@ -18,6 +18,6 @@ fi
 python manage.py collectstatic --noinput
 #python manage.py loaddata fixtures.json
 python manage.py migrate --noinput
-gunicorn -b 0:8028 conf.wsgi:application
+gunicorn -b 0:8028 firstdev.wsgi:application
 
 echo "End"
