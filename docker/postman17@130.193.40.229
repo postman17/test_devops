@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  nginx:
+    image: postman17/test-nginx
+    container_name: vps_test_nginx
+    restart: always
+    volumes:
+      - ../media:/media
+      - ../static:/static
+    depends_on:
+      - app
+    ports:
+      - "8044:80"
+
+  app:
+    image: postman17/test-app
+    restart: always
+    container_name: vps_test_app
+    volumes:
+      - ../media:/media
+      - ../static:/static
+    env_file:
+      - ../.env
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:11.1-alpine
+    container_name: vps_test_postgres
+    env_file: ../.env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
