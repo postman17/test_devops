@@ -15,7 +15,7 @@ ADD requirements.txt ./code/requirements.txt
 
 RUN pip3 install -r ./code/requirements.txt
 
-ADD ./jeck/ /code/
+ADD ./firstdev/ /code/
 ADD docker/dev/entrypoint.sh ./code/entrypoint.sh
 
 RUN chmod +x ./code/entrypoint.sh
