@@ -4,7 +4,7 @@ services:
 
   nginx:
     image: postman17/test-nginx
-    container_name: phc_jeck_nginx
+    container_name: vps_test_nginx
     restart: always
     volumes:
       - ../media:/media
@@ -17,7 +17,7 @@ services:
   app:
     image: postman17/test-app
     restart: always
-    container_name: phc_jeck_app
+    container_name: vps_test_app
     volumes:
       - ../media:/media
       - ../static:/static
@@ -28,7 +28,7 @@ services:
 
   postgresql:
     image: postgres:11.1-alpine
-    container_name: test_postgres
+    container_name: vps_test_postgres
     env_file: ../.env
     volumes:
       - ./pgdata:/var/lib/postgresql/data
