@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  nginx:
+    image: 63phc/jeck-nginx
+    container_name: phc_jeck_nginx
+    restart: always
+    volumes:
+      - ../media:/media
+      - ../static:/static
+    depends_on:
+      - app
+    ports:
+      - "8044:80"
+
+  app:
+    image: 63phc/jeck
+    restart: always
+    container_name: phc_jeck_app
+    volumes:
+      - ../media:/media
+      - ../static:/static
+    env_file:
+      - ../.env
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:11.1-alpine
+    container_name: phc_jeck_postgres
+    env_file: ../.env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
