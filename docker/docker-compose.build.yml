@@ -4,8 +4,8 @@ services:
 
   nginx:
     build: {context: ../, dockerfile: docker/nginx/Dockerfile}
-    image: postma17/test-nginx
+    image: postman17/test-nginx
 
   app:
     build: {context: ../, dockerfile: docker/dev/Dockerfile}
-    image: postma17/test-app
+    image: postman17/test-app

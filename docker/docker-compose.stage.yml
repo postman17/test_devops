@@ -3,7 +3,7 @@ version: '3'
 services:
 
   nginx:
-    image: postma17/test-nginx
+    image: postman17/test-nginx
     container_name: phc_jeck_nginx
     restart: always
     volumes:
@@ -15,7 +15,7 @@ services:
       - "8044:80"
 
   app:
-    image: postma17/test-app
+    image: postman17/test-app
     restart: always
     container_name: phc_jeck_app
     volumes:
