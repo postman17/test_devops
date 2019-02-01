@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  nginx:
+    build: {context: ../, dockerfile: docker/nginx/Dockerfile}
+    image: postma17/test-nginx
+
+  app:
+    build: {context: ../, dockerfile: docker/dev/Dockerfile}
+    image: postma17/test-app
