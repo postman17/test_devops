@@ -13,7 +13,7 @@ services:
       - "8044:80"
 
   app:
-    build: {context: ../, dockerfile: docker/test/Dockerfile}
+    build: {context: ../, dockerfile: docker/dev/Dockerfile}
     volumes:
       - ../media:/media
       - ../static:/static
