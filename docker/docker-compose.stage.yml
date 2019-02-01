@@ -3,7 +3,7 @@ version: '3'
 services:
 
   nginx:
-    image: 63phc/jeck-nginx
+    image: postma17/test-nginx
     container_name: phc_jeck_nginx
     restart: always
     volumes:
@@ -15,7 +15,7 @@ services:
       - "8044:80"
 
   app:
-    image: 63phc/jeck
+    image: postma17/test-app
     restart: always
     container_name: phc_jeck_app
     volumes:
@@ -28,7 +28,7 @@ services:
 
   postgresql:
     image: postgres:11.1-alpine
-    container_name: phc_jeck_postgres
+    container_name: test_postgres
     env_file: ../.env
     volumes:
       - ./pgdata:/var/lib/postgresql/data
