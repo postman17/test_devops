@@ -25,19 +25,20 @@ after_script:
   - docker images
   - echo "Push docker images done!"
 
+before_deploy:
+  - mkdir -p ~/.ssh
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+  - chmod 700 ~/.ssh/id_rsa
+  - eval "$(ssh-agent -s)"
+  - ssh-add ~/.ssh/id_rsa
+  - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - chmod +x deploy.sh
 deploy:
   provider: script
-  script:
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      - chmod 700 ~/.ssh/id_rsa
-      - eval "$(ssh-agent -s)"
-      - ssh-add ~/.ssh/id_rsa
-      - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - chmod +x deploy.sh
-      - REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/opt/test PROJECT_PROFILE=stage bash ./deploy.sh
-
+  script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/test PROJECT_PROFILE=stage bash ./deploy.sh
+  on:
+    branch: master
 
 
 after_deploy:
