@@ -2,7 +2,6 @@
 set -e
 
 echo ">>>>>>> copying a correct compose file <<<<<<<"
-cat /home/travis/.ssh/id_rsa
 scp -o "StrictHostKeyChecking no" docker/docker-compose.${PROJECT_PROFILE}.yml \
     ${REMOTE_USER}@${REMOTE_HOST}:${PROJECT_DIR}/docker-compose.yml
 
