@@ -32,7 +32,7 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   #- echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
   - echo 'echo -e "\n"' > ~/.echo_ps && chmod 700 ~/.echo_ps
-  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
+  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add - >> /dev/null
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
