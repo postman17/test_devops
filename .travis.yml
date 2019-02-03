@@ -30,8 +30,7 @@ before_deploy:
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
   - chmod 700 ~/.ssh/id_rsa
   - eval "$(ssh-agent -s)"
-  #- echo -e "\n" | ssh-add ~/.ssh/id_rsa
-  - ssh-add -l | grep -q '~/.ssh/id_rsa' || ssh-add ~/.ssh/id_rsa
+  - echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
