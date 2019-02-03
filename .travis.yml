@@ -31,7 +31,7 @@ deploy_stage:
       - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
       - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
       - chmod +x deploy.sh
-      - REMOTE_HOST=$REMOTE_HOST REMOTE_USER=gitlab PROJECT_DIR=/opt/jeck PROJECT_PROFILE=stage source ./deploy.sh
+      - REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/opt/jeck PROJECT_PROFILE=stage source ./deploy.sh
 
   only:
       - master
