@@ -31,9 +31,8 @@ before_deploy:
   - chmod 700 ~/.ssh/id_rsa
   - eval "$(ssh-agent -s)"
   #- echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
-#  - echo 'echo -e "\n"' > ~/.echo_ps && chmod 700 ~/.echo_ps
-#  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
-  - ssh-add ~/.ssh/id_rsa > /dev/null 2>&1
+  - echo 'echo SSH_PASSPHRASE' > ~/.echo_ps && chmod 700 ~/.echo_ps
+  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
