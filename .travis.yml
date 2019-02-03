@@ -2,39 +2,44 @@ sudo: required
 dist: trusty
 language: bash
 services: docker
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 stages:
   - deploy
 
 before_script:
-#    - apk add --no-cache rsync openssh
-#    - apk add --update python py-pip python-dev && pip install docker-compose
-    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
 
-deploy_dev:
-    stage: deploy
-    script:
-        - docker-compose -f docker/docker-compose.build.yml build
-        - docker-compose -f docker/docker-compose.build.yml push
-    only:
-        - develop
-
-
-deploy_stage:
-  stage: deploy
-  script:
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      - chmod 700 ~/.ssh/id_rsa
-      - eval "$(ssh-agent -s)"
-      - ssh-add ~/.ssh/id_rsa
-      - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - chmod +x deploy.sh
-      - REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/opt/jeck PROJECT_PROFILE=stage source ./deploy.sh
-
-  only:
-      - master
+script:
+  - docker-compose -f docker/docker-compose.build.yml build
+  - docker-compose -f docker/docker-compose.build.yml push
 
 after_script:
-  - docker ps
+  - docker images
+  - echo "Push docker images done!"
+
+#deploy_stage:
+#  stage: deploy
+#  script:
+#      - mkdir -p ~/.ssh
+#      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+#      - chmod 700 ~/.ssh/id_rsa
+#      - eval "$(ssh-agent -s)"
+#      - ssh-add ~/.ssh/id_rsa
+#      - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
+#      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#      - chmod +x deploy.sh
+#      - REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/opt/jeck PROJECT_PROFILE=stage source ./deploy.sh
+#
+#  only:
+#      - master
+
+#after_script:
+#  - docker ps
