@@ -4,7 +4,6 @@ services:
 
   nginx:
     image: postman17/test-nginx
-    container_name: vps_test_nginx
     restart: always
     volumes:
       - ../media:/media
@@ -17,7 +16,6 @@ services:
   app:
     image: postman17/test-app
     restart: always
-    container_name: vps_test_app
     volumes:
       - ../media:/media
       - ../static:/static
