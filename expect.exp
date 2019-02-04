@@ -16,7 +16,7 @@ cd /home/travis/.ssh/
 spawn ssh-add id_rsa
 
 # ждем этого приглашения, на что отвечаем паролем
-expect "Enter passphrase for key '/home/travis/.ssh/id_rsa':" { send "$password\r" }
+expect "Enter passphrase for id_rsa:" { send "$password\r" }
 
 #expect {
 #  # если выскочило это, то пароль не верен, выходим с ошибкой
