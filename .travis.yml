@@ -31,8 +31,9 @@ before_deploy:
 #  - echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
 #  - echo 'echo SSH_PASSPHRASE' > ~/.echo_ps && chmod 700 ~/.echo_ps
 #  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
-  - chmod +x ./expect.sh
-  - bash ./expect.sh SSH_PASSPHRASE
+  - which expect
+  - chmod +x ./expect.exp
+  - ./expect.exp SSH_PASSPHRASE
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
