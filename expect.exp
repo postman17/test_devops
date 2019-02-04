@@ -19,8 +19,8 @@ spawn ssh-add id_rsa
 expect "Enter passphrase for id_rsa:" { send "$password\r" }
 
 expect {
-  # если выскочило это, то пароль не верен, выходим с ошибкой
-  "Bad passphrase, try again for id_rsa:" { exit 1 }
   # выходим без ошибки
   "Identity added: id_rsa (id_rsa)" { exit 0 }
+  # если выскочило это, то пароль не верен, выходим с ошибкой
+  "Bad passphrase, try again for id_rsa:" { exit 1 }
 }
