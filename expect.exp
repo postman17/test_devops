@@ -10,7 +10,7 @@ set timeout 3
 # объявляем переменные
 set password [lindex $argv 0]
 
-cd .ssh
+cd /home/travis/.ssh/
 
 # запускаем программу
 spawn ssh-add id_rsa
