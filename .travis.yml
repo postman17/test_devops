@@ -10,9 +10,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-
-stages:
-  - deploy
+  - sudo apt-get install expect
 
 before_script:
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
@@ -30,9 +28,11 @@ before_deploy:
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
   - chmod 700 ~/.ssh/id_rsa
   - eval "$(ssh-agent -s)"
-  - echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
+#  - echo -e "\n" | ssh-add ~/.ssh/id_rsa & echo -e "\n"
 #  - echo 'echo SSH_PASSPHRASE' > ~/.echo_ps && chmod 700 ~/.echo_ps
 #  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
+  - chmod +x ./expect.sh
+  - bash ./expect.sh SSH_PASSPHRASE
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
