@@ -39,7 +39,7 @@ before_deploy:
   - chmod +x deploy.sh
 deploy:
   provider: script
-  script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/home/postman17/test PROJECT_PROFILE=stage bash ./deploy.sh
+  script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/home/postman17/test ENV_DIR=/home/postman17 PROJECT_PROFILE=stage bash ./deploy.sh
   on:
     branch: master
 

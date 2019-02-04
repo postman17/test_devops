@@ -5,6 +5,9 @@ echo ">>>>>>> copying a correct compose file <<<<<<<"
 scp -o "StrictHostKeyChecking no" docker/docker-compose.${PROJECT_PROFILE}.yml \
     ${REMOTE_USER}@${REMOTE_HOST}:${PROJECT_DIR}/docker-compose.yml
 
+scp -o "StrictHostKeyChecking no" .env \
+    ${REMOTE_USER}@${REMOTE_HOST}:${ENV_DIR}/
+
 echo "copy done!"
 
 COMPOSE_OPTS="-f ./docker-compose.yml -p test_devops_${PROJECT_PROFILE}"
