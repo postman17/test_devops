@@ -10,8 +10,10 @@ set timeout 3
 # объявляем переменные
 set password [lindex $argv 0]
 
+cd .ssh
+
 # запускаем программу
-spawn ssh-add ~/.ssh/id_rsa
+spawn ssh-add id_rsa
 
 # ждем этого приглашения, на что отвечаем паролем
 expect "Enter passphrase for key '/home/travis/.ssh/id_rsa':" { send "$password\r" }
