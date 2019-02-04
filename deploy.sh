@@ -24,8 +24,8 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} -o "StrictHostKeyChecking no" << EOF
     docker-compose ${COMPOSE_OPTS} up -d
 
     #echo ">>>>>>> Remove trash <<<<<<<"
-    #docker volume ls -qf dangling=true | xargs -r docker volume rm
-    #docker images --filter "dangling=true" -q --no-trunc | xargs -r docker rmi
+    docker volume ls -qf dangling=true | xargs -r docker volume rm
+    docker images --filter "dangling=true" -q --no-trunc | xargs -r docker rmi
     docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
 EOF
 
