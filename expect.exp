@@ -16,11 +16,13 @@ cd /home/travis/.ssh/
 spawn ssh-add id_rsa
 
 # ждем этого приглашения, на что отвечаем паролем
-expect "Enter passphrase for id_rsa:" { send "$password\r" }
+#expect "Enter passphrase for id_rsa:" { send "$password\r" }
 
 expect {
-  # выходим без ошибки
-  "Identity added: id_rsa (id_rsa)" { exit 0 }
-  # если выскочило это, то пароль не верен, выходим с ошибкой
-  "Bad passphrase, try again for id_rsa:" { exit 1 }
+    # ждем этого приглашения, на что отвечаем паролем
+    "Enter passphrase for id_rsa:" { send "$password\r" }
+    # выходим без ошибки
+    "Identity added: id_rsa (id_rsa)" { exit 0 }
+    # если выскочило это, то пароль не верен, выходим с ошибкой
+    "Bad passphrase, try again for id_rsa:" { exit 1 }
 }
