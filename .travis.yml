@@ -27,19 +27,13 @@ before_deploy:
   - chmod 700 ~/.ssh/id_rsa
   - eval "$(ssh-agent -s)"
   - ssh-add ~/.ssh/id_rsa
-#  - echo 'echo SSH_PASSPHRASE' > ~/.echo_ps && chmod 700 ~/.echo_ps
-#  - cat ~/.ssh/id_rsa | SSH_ASKPASS=~/.echo_ps ssh-add -
-#  - chmod +x ./expect.exp
-#  - ./expect.exp SSH_PASSPHRASE
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod +x deploy.sh
+
 deploy:
   provider: script
   script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/home/postman17/test ENV_DIR=/home/postman17 PROJECT_PROFILE=stage bash ./deploy.sh
   on:
     branch: master
 
-
-after_deploy:
-  - echo "DONE!"
