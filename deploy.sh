@@ -18,14 +18,14 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} -o "StrictHostKeyChecking no" << EOF
     cd ${PROJECT_DIR}
 
     echo ">>>>>>> docker-compose pull/down/up <<<<<<<"
-    docker-compose ${COMPOSE_OPTS} pull
-    docker-compose ${COMPOSE_OPTS} down
-    docker-compose ${COMPOSE_OPTS} up -d
+    sudo docker-compose ${COMPOSE_OPTS} pull
+    sudo docker-compose ${COMPOSE_OPTS} down
+    sudo docker-compose ${COMPOSE_OPTS} up -d
 
     echo ">>>>>>> Remove trash <<<<<<<"
-    docker volume ls -qf dangling=true | xargs -r docker volume rm
-    docker images --filter "dangling=true" -q --no-trunc | xargs -r docker rmi
-    docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
+    sudo docker volume ls -qf dangling=true | xargs -r docker volume rm
+    sudo docker images --filter "dangling=true" -q --no-trunc | xargs -r docker rmi
+    sudo docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
 EOF
 
 echo "Done!"
