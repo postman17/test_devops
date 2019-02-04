@@ -12,16 +12,16 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - sudo apt-get install expect
 
-#before_script:
-#  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-#
-#script:
-#  - docker-compose -f docker/docker-compose.build.yml build
-#  - docker-compose -f docker/docker-compose.build.yml push
-#
-#after_script:
-#  - docker images
-#  - echo "Push docker images done!"
+before_script:
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+
+script:
+  - docker-compose -f docker/docker-compose.build.yml build
+  - docker-compose -f docker/docker-compose.build.yml push
+
+after_script:
+  - docker images
+  - echo "Push docker images done!"
 
 before_deploy:
   - mkdir -p ~/.ssh
