@@ -16,7 +16,7 @@ before_script:
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
 
 script:
-  - date >> firstdev/main/depoly_date.txt
+  - date >> firstdev/main/deploy_date.txt
   - docker-compose -f docker/docker-compose.build.yml build
   - docker-compose -f docker/docker-compose.build.yml push
 
