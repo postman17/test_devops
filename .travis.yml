@@ -25,6 +25,7 @@ before_install:
 
 before_deploy:
   - mkdir -p ~/.ssh
+  - SSH_PRIVATE_KEY=$(cat id_rsa)
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
   - chmod 700 ~/.ssh/id_rsa
   - eval "$(ssh-agent -s)"
