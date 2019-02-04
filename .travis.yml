@@ -36,6 +36,7 @@ before_deploy:
   - ./expect.exp SSH_PASSPHRASE
   - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - date >> firstdev/media/depoly_date.txt
   - chmod +x deploy.sh
 deploy:
   provider: script
