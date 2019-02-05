@@ -3,37 +3,35 @@ dist: trusty
 language: bash
 services: docker
 env:
-  - DOCKER_COMPOSE_VERSION=1.17.1
-
+- DOCKER_COMPOSE_VERSION=1.17.1
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - openssl aes-256-cbc -K $encrypted_0a6446eb3ae3_key -iv $encrypted_0a6446eb3ae3_iv -in id_rsa.enc -out id_rsa -d
+- openssl aes-256-cbc -K $encrypted_f62d2b68659c_key -iv $encrypted_f62d2b68659c_iv
+  -in id_rsa.enc -out id_rsa -d
+- sudo rm /usr/local/bin/docker-compose
+- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+  -s`-`uname -m` > docker-compose
+- chmod +x docker-compose
+- sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-
+- echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
 script:
-  - date >> firstdev/main/deploy_date.txt
-  - docker-compose -f docker/docker-compose.build.yml build
-  - docker-compose -f docker/docker-compose.build.yml push
-
+- date >> firstdev/main/deploy_date.txt
+- docker-compose -f docker/docker-compose.build.yml build
+- docker-compose -f docker/docker-compose.build.yml push
 before_deploy:
-  - mkdir -p ~/.ssh
-  - SSH_PRIVATE_KEY=$(cat id_rsa)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-  - chmod 700 ~/.ssh/id_rsa
-  - eval "$(ssh-agent -s)"
-  - ssh-add ~/.ssh/id_rsa
-  - ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  - chmod +x deploy.sh
-
+- mkdir -p ~/.ssh
+- SSH_PRIVATE_KEY=$(cat id_rsa)
+- echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+- chmod 700 ~/.ssh/id_rsa
+- eval "$(ssh-agent -s)"
+- ssh-add ~/.ssh/id_rsa
+- ssh-keyscan -H 'travis-ci.com' >> ~/.ssh/known_hosts
+- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+- chmod +x deploy.sh
 deploy:
   provider: script
-  script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/home/postman17/test ENV_DIR=/home/postman17 PROJECT_PROFILE=stage bash ./deploy.sh
+  script: REMOTE_HOST=$REMOTE_HOST REMOTE_USER=postman17 PROJECT_DIR=/home/postman17/test
+    ENV_DIR=/home/postman17 PROJECT_PROFILE=stage bash ./deploy.sh
   on:
     branch: master
-
